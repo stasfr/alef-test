@@ -1,31 +1,67 @@
 <template>
   <form action="" class="form">
     <div class="form__personal personal">
-      <h2 class="form__title">Персональные данные</h2>
+      <h2 class="personal__title">Персональные данные</h2>
 
       <div class="personal__inputs">
         <div class="input__container">
-          <div for="name">Имя</div>
-          <input type="text" id="name" name="name" />
+          <div for="PersonName">Имя</div>
+          <input type="text" id="PersonName" name="PersonName" />
         </div>
 
         <div class="input__container">
-          <div for="age">Возраст</div>
-          <input type="text" id="age" name="age" />
+          <div for="PersonAge">Возраст</div>
+          <input type="text" id="PersonAge" name="PersonAge" />
         </div>
       </div>
     </div>
+
+    <div class="form__childs childs">
+      <div class="childs__header">
+        <h2 class="childs__title">Дети (макс. 5)</h2>
+        <button class="childs__btn">
+          <img src="/src/assets/icons/plus-svgrepo-com.svg" alt="" /> Добавить
+          ребенка
+        </button>
+      </div>
+
+      <div class="childs__body">
+        <div class="childs__item" v-for="(child, index) in childs">
+          <div class="input__container">
+            <div :for="child.name">Имя</div>
+            <input type="text" :id="child.name" :name="child.name" />
+          </div>
+
+          <div class="input__container">
+            <div :for="child.name">Возраст</div>
+            <input type="text" :id="child.name" :name="child.name" />
+          </div>
+
+          <button class="childs__item-btn">Удалить</button>
+        </div>
+      </div>
+    </div>
+    <button class="form__btn">Сохранить</button>
   </form>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
+import Child from "@/types/child";
+import Person from "@/types/person";
+import PlusIcon from "@/assets/icons/plus-svgrepo-com.svg";
 
 export default defineComponent({
   name: "FormComponent",
-  components: {},
-  props: {},
-  setup(props) {},
+  setup() {
+    const childs = ref<Child[]>([
+      { name: "Ребенок 1", age: 5 },
+      { name: "Ребенок 2", age: 10 },
+    ]);
+    const person = ref<Person>();
+
+    return { childs };
+  },
 });
 </script>
 
@@ -33,11 +69,17 @@ export default defineComponent({
 .form {
   width: 100%;
   max-width: 616px;
+  display: flex;
+  flex-direction: column;
 }
+.form > *:not(:last-child) {
+  margin-bottom: 45px;
+}
+
 .personal > *:not(:last-child) {
   margin-bottom: 20px;
 }
-.form__title {
+.personal__title {
   font-size: 16px;
   line-height: calc(24 / 16 * 100%);
   font-weight: 500;
@@ -53,12 +95,71 @@ export default defineComponent({
 .input__container > div {
   font-size: 13px;
   color: #111111;
+  margin-bottom: 2px;
 }
 .input__container > input {
   color: #111111;
   line-height: calc(24 / 16 * 100%);
+  width: 100%;
 }
 .input__container > input:focus {
   outline: none;
+}
+
+.childs__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.childs__btn {
+  color: #01a7fd;
+  border: 2px solid #01a7fd;
+  padding: 5px 10px;
+  border-radius: 100px;
+  background-color: #ffffff;
+}
+
+.childs > *:not(:last-child) {
+  margin-bottom: 20px;
+}
+.childs__item {
+  display: grid;
+  /* grid-template-columns: 40% 40% auto; */
+  grid-template-rows: repeat(3, 1fr);
+  gap: 5px;
+  align-items: center;
+}
+.childs__item:not(:last-child) {
+  margin-bottom: 20px;
+}
+.childs__item-btn {
+  background-color: #ffffff;
+  border-radius: 4px;
+  color: #01a7fd;
+}
+@media (min-width: 480px) {
+  .childs__item {
+    grid-template-columns: 40% 40% auto;
+    grid-template-rows: none;
+    gap: 18px;
+  }
+  .childs__item:not(:last-child) {
+    margin-bottom: 10px;
+  }
+  .childs__btn {
+    padding: 10px 20px;
+  }
+  .form {
+    display: block;
+  }
+}
+
+.form__btn {
+  padding: 10px 20px;
+  background-color: #01a7fd;
+  color: #ffffff;
+  font-size: 16px;
+  border-radius: 100px;
+  margin: 0 auto;
 }
 </style>
