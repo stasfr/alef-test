@@ -1,14 +1,11 @@
 <template>
-  <div class="_container">Home page</div>
+  <div class="_container">Preview</div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "",
-  components: {},
-  props: {},
   setup(props) {},
 });
 </script>
