@@ -18,7 +18,10 @@ export default defineComponent({
 
 <style scoped>
 .footer {
-  text-align: center;
+  background-color: #fafafa;
+  min-height: 76px;
+  display: flex;
+  align-items: center;
 }
 .footer__text {
   font-size: 13px;

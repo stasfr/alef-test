@@ -1,5 +1,7 @@
 <template>
-  <div class="_container">Preview</div>
+  <div class="page__preview preview">
+    <div class="preview__container _container">preview</div>
+  </div>
 </template>
 
 <script lang="ts">
