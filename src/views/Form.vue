@@ -1,6 +1,6 @@
 <template>
-  <div class="page__form form">
-    <div class="form__container _container"><FormComponent /></div>
+  <div class="page__main main">
+    <div class="main__container _container"><FormComponent /></div>
   </div>
 </template>
 
@@ -14,4 +14,9 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.main__container {
+  display: flex;
+  justify-content: center;
+}
+</style>
