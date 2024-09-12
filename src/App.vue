@@ -14,4 +14,8 @@ import HeaderComponent from "./components/HeaderComponent.vue";
 import FooterComponent from "./components/FooterComponent.vue";
 </script>
 
-<style scoped></style>
+<style scoped>
+.page {
+  min-height: 70vh;
+}
+</style>
