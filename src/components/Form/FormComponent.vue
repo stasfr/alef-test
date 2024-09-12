@@ -11,19 +11,19 @@
             id="PersonName"
             name="PersonName"
             required
-            v-model="formData.person.name"
+            v-model="formDataRef.person.name"
           />
         </div>
 
         <div class="input__container">
           <div for="PersonAge">Возраст</div>
           <input
-            type="text"
+            type="number"
             id="PersonAge"
             name="PersonAge"
-            pattern="[0-9]*"
+            min="18"
             required
-            v-model="formData.person.age"
+            v-model="formDataRef.person.age"
           />
         </div>
       </div>
@@ -39,14 +39,14 @@
       </div>
 
       <div class="childs__body">
-        <div class="childs__item" v-for="(child, index) in formData.childs">
+        <div class="childs__item" v-for="(child, index) in formDataRef.childs">
           <div class="input__container">
             <div :for="`name${index}`">Имя</div>
             <input
               type="text"
               :id="`name${index}`"
               :name="`name${index}`"
-              v-model="formData.childs[index].name"
+              v-model="formDataRef.childs[index].name"
               required
             />
           </div>
@@ -54,11 +54,10 @@
           <div class="input__container">
             <div :for="`age${index}`">Возраст</div>
             <input
-              type="text"
+              type="number"
               :id="`age${index}`"
               :name="`age${index}`"
-              v-model="formData.childs[index].age"
-              pattern="[0-9]*"
+              v-model="formDataRef.childs[index].age"
               required
             />
           </div>
@@ -82,23 +81,32 @@ export default defineComponent({
   name: "FormComponent",
   setup() {
     const formStore = useFormStore();
-    const formData = formStore.formData;
+
+    const formDataRef = ref<FormData>({
+      person: { name: "", age: 0 },
+      childs: [],
+    });
 
     function addChild(): void {
-      if (formData.childs.length < 5) {
-        formData.childs.push({ name: "", age: 0 });
+      if (formDataRef.value.childs.length < 5) {
+        formDataRef.value.childs.push({ name: "", age: 0 });
       }
     }
 
     function deleteChild(index: number): void {
-      formData.childs.splice(index, 1);
+      formDataRef.value.childs.splice(index, 1);
     }
 
     function sendForm(): void {
-      formStore.dataOnServer = formData;
+      formStore.saveFormData(formDataRef.value);
+      formDataRef.value = {
+        person: { name: "", age: 0 },
+        childs: [],
+      };
+      console.log(formDataRef.value);
     }
 
-    return { addChild, deleteChild, sendForm, formData };
+    return { addChild, deleteChild, sendForm, formDataRef };
   },
 });
 </script>
@@ -166,7 +174,6 @@ export default defineComponent({
 }
 .childs__item {
   display: grid;
-  /* grid-template-columns: 40% 40% auto; */
   grid-template-rows: repeat(3, 1fr);
   gap: 5px;
   align-items: center;
