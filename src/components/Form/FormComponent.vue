@@ -6,12 +6,12 @@
       <div class="personal__inputs">
         <div class="input__container">
           <div for="PersonName">Имя</div>
-          <input type="text" id="PersonName" name="PersonName" />
+          <input type="text" id="PersonName" name="PersonName" required />
         </div>
 
         <div class="input__container">
           <div for="PersonAge">Возраст</div>
-          <input type="text" id="PersonAge" name="PersonAge" />
+          <input type="text" id="PersonAge" name="PersonAge" required />
         </div>
       </div>
     </div>
@@ -29,12 +29,12 @@
         <div class="childs__item" v-for="(child, index) in childs">
           <div class="input__container">
             <div :for="child.name">Имя</div>
-            <input type="text" :id="child.name" :name="child.name" />
+            <input type="text" :id="child.name" :name="child.name" required />
           </div>
 
           <div class="input__container">
             <div :for="child.name">Возраст</div>
-            <input type="text" :id="child.name" :name="child.name" />
+            <input type="text" :id="child.name" :name="child.name" required />
           </div>
 
           <button class="childs__item-btn">Удалить</button>
@@ -108,13 +108,17 @@ export default defineComponent({
 
 .childs__header {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
+}
+.childs__header > *:not(:last-child) {
+  margin-bottom: 10px;
 }
 .childs__btn {
   color: #01a7fd;
   border: 2px solid #01a7fd;
-  padding: 5px 10px;
+  padding: 10px 20px;
   border-radius: 100px;
   background-color: #ffffff;
 }
@@ -138,6 +142,12 @@ export default defineComponent({
   color: #01a7fd;
 }
 @media (min-width: 480px) {
+  .childs__header {
+    flex-direction: row;
+  }
+  .childs__header > *:not(:last-child) {
+    margin-bottom: 0;
+  }
   .childs__item {
     grid-template-columns: 40% 40% auto;
     grid-template-rows: none;
