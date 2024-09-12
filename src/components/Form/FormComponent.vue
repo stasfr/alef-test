@@ -4,28 +4,20 @@
       <h2 class="personal__title">Персональные данные</h2>
 
       <div class="personal__inputs">
-        <div class="input__container">
-          <div for="PersonName">Имя</div>
-          <input
-            type="text"
-            id="PersonName"
-            name="PersonName"
-            required
-            v-model="formDataRef.person.name"
-          />
-        </div>
-
-        <div class="input__container">
-          <div for="PersonAge">Возраст</div>
-          <input
-            type="number"
-            id="PersonAge"
-            name="PersonAge"
-            min="18"
-            required
-            v-model="formDataRef.person.age"
-          />
-        </div>
+        <InputComponent
+          v-model="formDataRef.person.name"
+          placeholder="Имя"
+          type="text"
+          id="PersonName"
+          name="PersonName"
+        />
+        <InputComponent
+          v-model.number="formDataRef.person.age"
+          placeholder="Возраст"
+          type="number"
+          id="PersonAge"
+          name="PersonAge"
+        />
       </div>
     </div>
 
@@ -40,27 +32,21 @@
 
       <div class="childs__body">
         <div class="childs__item" v-for="(child, index) in formDataRef.childs">
-          <div class="input__container">
-            <div :for="`name${index}`">Имя</div>
-            <input
-              type="text"
-              :id="`name${index}`"
-              :name="`name${index}`"
-              v-model="formDataRef.childs[index].name"
-              required
-            />
-          </div>
-
-          <div class="input__container">
-            <div :for="`age${index}`">Возраст</div>
-            <input
-              type="number"
-              :id="`age${index}`"
-              :name="`age${index}`"
-              v-model="formDataRef.childs[index].age"
-              required
-            />
-          </div>
+          <InputComponent
+            v-model="formDataRef.childs[index].name"
+            placeholder="Имя"
+            type="text"
+            :id="`name${index}`"
+            :name="`name${index}`"
+          />
+          <InputComponent
+            v-model="formDataRef.childs[index].age"
+            placeholder="Возраст"
+            type="number"
+            :id="`age${index}`"
+            :name="`age${index}`"
+            min="0"
+          />
 
           <button class="childs__item-btn" @click.prevent="deleteChild(index)">
             Удалить
@@ -76,9 +62,11 @@
 import { defineComponent, ref } from "vue";
 import { useFormStore } from "@/stores/formData";
 import FormData from "@/types/formData";
+import InputComponent from "./InputComponent.vue";
 
 export default defineComponent({
   name: "FormComponent",
+  components: { InputComponent },
   setup() {
     const formStore = useFormStore();
 
@@ -132,24 +120,6 @@ export default defineComponent({
 }
 .personal__inputs > *:not(:last-child) {
   margin-bottom: 10px;
-}
-.input__container {
-  border: 1px solid #f1f1f1;
-  border-radius: 4px;
-  padding: 8px 16px;
-}
-.input__container > div {
-  font-size: 13px;
-  color: #111111;
-  margin-bottom: 2px;
-}
-.input__container > input {
-  color: #111111;
-  line-height: calc(24 / 16 * 100%);
-  width: 100%;
-}
-.input__container > input:focus {
-  outline: none;
 }
 
 .childs__header {
