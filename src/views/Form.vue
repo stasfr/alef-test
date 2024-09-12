@@ -10,7 +10,6 @@ import FormComponent from "@/components/Form/FormComponent.vue";
 
 export default defineComponent({
   components: { FormComponent },
-  setup(props) {},
 });
 </script>
 

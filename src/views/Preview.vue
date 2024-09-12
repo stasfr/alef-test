@@ -1,15 +1,21 @@
 <template>
   <div class="page__preview preview">
-    <div class="preview__container _container">preview</div>
+    <div class="preview__container _container"><PreviewComponent /></div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import PreviewComponent from "@/components/Preview/PreviewComponent.vue";
 
 export default defineComponent({
-  setup(props) {},
+  components: { PreviewComponent },
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.preview__container {
+  display: flex;
+  justify-content: center;
+}
+</style>
