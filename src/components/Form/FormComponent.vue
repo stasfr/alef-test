@@ -1,17 +1,29 @@
 <template>
-  <form action="" class="form">
+  <form action="" class="form" @submit.prevent>
     <div class="form__personal personal">
       <h2 class="personal__title">Персональные данные</h2>
 
       <div class="personal__inputs">
         <div class="input__container">
           <div for="PersonName">Имя</div>
-          <input type="text" id="PersonName" name="PersonName" required />
+          <input
+            type="text"
+            id="PersonName"
+            name="PersonName"
+            required
+            v-model="person.name"
+          />
         </div>
 
         <div class="input__container">
           <div for="PersonAge">Возраст</div>
-          <input type="text" id="PersonAge" name="PersonAge" required />
+          <input
+            type="text"
+            id="PersonAge"
+            name="PersonAge"
+            required
+            v-model="person.age"
+          />
         </div>
       </div>
     </div>
@@ -19,25 +31,39 @@
     <div class="form__childs childs">
       <div class="childs__header">
         <h2 class="childs__title">Дети (макс. 5)</h2>
-        <button class="childs__btn">
-          <img src="/src/assets/icons/plus-svgrepo-com.svg" alt="" /> Добавить
-          ребенка
+        <button class="childs__btn" @click.prevent="addChild">
+          <img src="/src/assets/icons/plus-svgrepo-com.svg" alt="plus-sign" />
+          Добавить ребенка
         </button>
       </div>
 
       <div class="childs__body">
         <div class="childs__item" v-for="(child, index) in childs">
           <div class="input__container">
-            <div :for="child.name">Имя</div>
-            <input type="text" :id="child.name" :name="child.name" required />
+            <div :for="`name${index}`">Имя</div>
+            <input
+              type="text"
+              :id="`name${index}`"
+              :name="`name${index}`"
+              v-model="childs[index].name"
+              required
+            />
           </div>
 
           <div class="input__container">
-            <div :for="child.name">Возраст</div>
-            <input type="text" :id="child.name" :name="child.name" required />
+            <div :for="`age${index}`">Возраст</div>
+            <input
+              type="text"
+              :id="`age${index}`"
+              :name="`age${index}`"
+              v-model="childs[index].age"
+              required
+            />
           </div>
 
-          <button class="childs__item-btn">Удалить</button>
+          <button class="childs__item-btn" @click.prevent="deleteChild(index)">
+            Удалить
+          </button>
         </div>
       </div>
     </div>
@@ -49,18 +75,24 @@
 import { defineComponent, ref } from "vue";
 import Child from "@/types/child";
 import Person from "@/types/person";
-import PlusIcon from "@/assets/icons/plus-svgrepo-com.svg";
 
 export default defineComponent({
   name: "FormComponent",
   setup() {
-    const childs = ref<Child[]>([
-      { name: "Ребенок 1", age: 5 },
-      { name: "Ребенок 2", age: 10 },
-    ]);
-    const person = ref<Person>();
+    const childs = ref<Child[]>([]);
+    const person = ref<Person>({ name: "", age: 0 });
 
-    return { childs };
+    function addChild(): void {
+      if (childs.value.length < 5) {
+        childs.value.push({ name: "", age: 0 });
+      }
+    }
+
+    function deleteChild(index: number): void {
+      childs.value.splice(index, 1);
+    }
+
+    return { childs, person, addChild, deleteChild };
   },
 });
 </script>
