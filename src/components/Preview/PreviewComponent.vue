@@ -2,15 +2,15 @@
   <div class="preview__wrapper">
     <div class="preview__personal">
       <h2 class="preview__header">Персональные данные</h2>
-      <div class="preview__header-data" v-if="formData.person">
-        {{ formData.person.name }}, {{ formData.person.age }} лет
+      <div class="preview__header-data" v-if="isPerson">
+        {{ dataOnServer.person.name }}, {{ dataOnServer.person.age }} лет
       </div>
     </div>
     <div class="preview__childs">
       <h3 class="preview__childs-header">Дети</h3>
       <div
         class="preview__childs-item"
-        v-for="(child, index) in formData.childs"
+        v-for="(child, index) in dataOnServer.childs"
       >
         {{ child.name }}, {{ child.age }} лет
       </div>
@@ -26,9 +26,12 @@ export default defineComponent({
   name: "PreviewComponent",
   setup() {
     const formStore = useFormStore();
-    const formData = formStore.formData;
+    const dataOnServer = formStore.dataOnServer;
 
-    return { formData };
+    const isPerson =
+      dataOnServer.person.name !== "" && dataOnServer.person.age !== 0;
+
+    return { dataOnServer, isPerson };
   },
 });
 </script>

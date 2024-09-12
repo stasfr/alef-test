@@ -11,7 +11,7 @@
             id="PersonName"
             name="PersonName"
             required
-            v-model="formDataRef.person.name"
+            v-model="formData.person.name"
           />
         </div>
 
@@ -23,7 +23,7 @@
             name="PersonAge"
             pattern="[0-9]*"
             required
-            v-model="formDataRef.person.age"
+            v-model="formData.person.age"
           />
         </div>
       </div>
@@ -39,14 +39,14 @@
       </div>
 
       <div class="childs__body">
-        <div class="childs__item" v-for="(child, index) in formDataRef.childs">
+        <div class="childs__item" v-for="(child, index) in formData.childs">
           <div class="input__container">
             <div :for="`name${index}`">Имя</div>
             <input
               type="text"
               :id="`name${index}`"
               :name="`name${index}`"
-              v-model="formDataRef.childs[index].name"
+              v-model="formData.childs[index].name"
               required
             />
           </div>
@@ -57,7 +57,7 @@
               type="text"
               :id="`age${index}`"
               :name="`age${index}`"
-              v-model="formDataRef.childs[index].age"
+              v-model="formData.childs[index].age"
               pattern="[0-9]*"
               required
             />
@@ -82,27 +82,23 @@ export default defineComponent({
   name: "FormComponent",
   setup() {
     const formStore = useFormStore();
-
-    const formDataRef = ref<FormData>({
-      person: { name: "", age: 0 },
-      childs: [],
-    });
+    const formData = formStore.formData;
 
     function addChild(): void {
-      if (formDataRef.value.childs.length < 5) {
-        formDataRef.value.childs.push({ name: "", age: 0 });
+      if (formData.childs.length < 5) {
+        formData.childs.push({ name: "", age: 0 });
       }
     }
 
     function deleteChild(index: number): void {
-      formDataRef.value.childs.splice(index, 1);
+      formData.childs.splice(index, 1);
     }
 
     function sendForm(): void {
-      formStore.formData = formDataRef.value;
+      formStore.dataOnServer = formData;
     }
 
-    return { addChild, deleteChild, sendForm, formDataRef };
+    return { addChild, deleteChild, sendForm, formData };
   },
 });
 </script>
