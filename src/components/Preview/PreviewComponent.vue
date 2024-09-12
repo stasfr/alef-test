@@ -8,18 +8,18 @@
     </div>
     <div class="preview__childs">
       <h3 class="preview__childs-header">Дети</h3>
-      <div
-        class="preview__childs-item"
-        v-for="(child, index) in formData.childs"
-      >
-        {{ child.name }}, {{ child.age }} лет
-      </div>
+      <ChildComponent
+        v-for="child in formData.childs"
+        :name="child.name"
+        :age="child.age"
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useFormStore } from "@/stores/formData";
+import ChildComponent from "./ChildComponent.vue";
 
 const formStore = useFormStore();
 const formData = formStore.formData;
@@ -48,11 +48,5 @@ const isPerson = formData.person.name !== "" && formData.person.age !== 0;
 }
 .preview__childs-header {
   font-weight: 500;
-}
-.preview__childs-item {
-  font-weight: 700;
-  background-color: #f1f1f1;
-  padding: 10px 20px;
-  border-radius: 5px;
 }
 </style>
