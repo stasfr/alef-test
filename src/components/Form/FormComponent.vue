@@ -58,45 +58,37 @@
   </form>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from "vue";
+<script setup lang="ts">
+import { ref } from "vue";
 import { useFormStore } from "@/stores/formData";
 import FormData from "@/types/formData";
 import InputComponent from "./InputComponent.vue";
 
-export default defineComponent({
-  name: "FormComponent",
-  components: { InputComponent },
-  setup() {
-    const formStore = useFormStore();
+const formStore = useFormStore();
 
-    const formDataRef = ref<FormData>({
-      person: { name: "", age: 0 },
-      childs: [],
-    });
-
-    function addChild(): void {
-      if (formDataRef.value.childs.length < 5) {
-        formDataRef.value.childs.push({ name: "", age: 0 });
-      }
-    }
-
-    function deleteChild(index: number): void {
-      formDataRef.value.childs.splice(index, 1);
-    }
-
-    function sendForm(): void {
-      formStore.saveFormData(formDataRef.value);
-      formDataRef.value = {
-        person: { name: "", age: 0 },
-        childs: [],
-      };
-      console.log(formDataRef.value);
-    }
-
-    return { addChild, deleteChild, sendForm, formDataRef };
-  },
+const formDataRef = ref<FormData>({
+  person: { name: "", age: 0 },
+  childs: [],
 });
+
+function addChild(): void {
+  if (formDataRef.value.childs.length < 5) {
+    formDataRef.value.childs.push({ name: "", age: 0 });
+  }
+}
+
+function deleteChild(index: number): void {
+  formDataRef.value.childs.splice(index, 1);
+}
+
+function sendForm(): void {
+  formStore.saveFormData(formDataRef.value);
+  formDataRef.value = {
+    person: { name: "", age: 0 },
+    childs: [],
+  };
+  console.log(formDataRef.value);
+}
 </script>
 
 <style scoped>

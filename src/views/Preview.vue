@@ -4,13 +4,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import PreviewComponent from "@/components/Preview/PreviewComponent.vue";
-
-export default defineComponent({
-  components: { PreviewComponent },
-});
 </script>
 
 <style scoped>

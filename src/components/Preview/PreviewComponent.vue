@@ -18,21 +18,13 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import { useFormStore } from "@/stores/formData";
 
-export default defineComponent({
-  name: "PreviewComponent",
-  setup() {
-    const formStore = useFormStore();
-    const formData = formStore.formData;
+const formStore = useFormStore();
+const formData = formStore.formData;
 
-    const isPerson = formData.person.name !== "" && formData.person.age !== 0;
-
-    return { formData, isPerson };
-  },
-});
+const isPerson = formData.person.name !== "" && formData.person.age !== 0;
 </script>
 
 <style scoped>

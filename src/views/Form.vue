@@ -4,13 +4,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import FormComponent from "@/components/Form/FormComponent.vue";
-
-export default defineComponent({
-  components: { FormComponent },
-});
 </script>
 
 <style scoped>
