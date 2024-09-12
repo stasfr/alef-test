@@ -1,5 +1,5 @@
 <template>
-  <form action="" class="form" @submit.prevent>
+  <form action="" class="form" @submit.prevent="sendForm">
     <div class="form__personal personal">
       <h2 class="personal__title">Персональные данные</h2>
 
@@ -21,6 +21,7 @@
             type="text"
             id="PersonAge"
             name="PersonAge"
+            pattern="[0-9]*"
             required
             v-model="person.age"
           />
@@ -57,6 +58,7 @@
               :id="`age${index}`"
               :name="`age${index}`"
               v-model="childs[index].age"
+              pattern="[0-9]*"
               required
             />
           </div>
@@ -92,7 +94,14 @@ export default defineComponent({
       childs.value.splice(index, 1);
     }
 
-    return { childs, person, addChild, deleteChild };
+    function sendForm(): void {
+      console.log({
+        person: person.value,
+        childs: childs.value,
+      });
+    }
+
+    return { childs, person, addChild, deleteChild, sendForm };
   },
 });
 </script>
