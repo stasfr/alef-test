@@ -10,7 +10,7 @@
           type="text"
           id="PersonName"
           name="PersonName"
-          pattern="[a-zA-Z]+"
+          pattern="[a-z,A-Z,А-я,Ё,ё]+"
         />
         <InputComponent
           v-model.number="formDataRef.person.age"
@@ -39,7 +39,7 @@
             type="text"
             :id="`name${index}`"
             :name="`name${index}`"
-            pattern="[a-zA-Z]+"
+            pattern="[a-z,A-Z,А-я,Ё,ё]+"
           />
           <InputComponent
             v-model="formDataRef.childs[index].age"

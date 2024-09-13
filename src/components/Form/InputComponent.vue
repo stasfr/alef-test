@@ -44,7 +44,7 @@ const props = defineProps({
   },
   pattern: {
     type: String,
-    default: "text",
+    default: null,
   },
 });
 const model = defineModel();
