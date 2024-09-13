@@ -8,6 +8,8 @@
       required
       v-model="model"
       :min="min"
+      :max="max"
+      :pattern="pattern"
     />
   </div>
 </template>
@@ -35,6 +37,14 @@ const props = defineProps({
   min: {
     type: String,
     default: "18",
+  },
+  max: {
+    type: String,
+    default: "150",
+  },
+  pattern: {
+    type: String,
+    default: "text",
   },
 });
 const model = defineModel();
