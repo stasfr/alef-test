@@ -1,5 +1,5 @@
 <template>
-  <div class="input__container">
+  <div class="input__container" :class="{ error: isError }">
     <div for="PersonName">{{ placeholder }}</div>
     <input
       :type="type"
@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineModel, defineProps } from "vue";
+import { defineModel, defineProps, watch, ref } from "vue";
 
 const props = defineProps({
   type: {
@@ -48,6 +48,19 @@ const props = defineProps({
   },
 });
 const model = defineModel();
+
+const isError = ref<boolean>(false);
+
+watch(model, () => {
+  if (
+    (props.type === "number" && (model.value as number) < Number(props.min)) ||
+    (model.value as number) > Number(props.max)
+  ) {
+    isError.value = true;
+  } else {
+    isError.value = false;
+  }
+});
 </script>
 
 <style scoped>
@@ -55,6 +68,9 @@ const model = defineModel();
   border: 1px solid #f1f1f1;
   border-radius: 4px;
   padding: 8px 16px;
+}
+.error {
+  border: 1px solid red;
 }
 .input__container > div {
   font-size: 13px;
