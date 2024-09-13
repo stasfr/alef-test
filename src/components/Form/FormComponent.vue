@@ -89,7 +89,6 @@ function sendForm(): void {
     person: { name: "", age: 0 },
     childs: [],
   };
-  console.log(formDataRef.value);
 }
 </script>
 
