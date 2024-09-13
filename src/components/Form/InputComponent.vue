@@ -52,11 +52,15 @@ const model = defineModel();
 const isError = ref<boolean>(false);
 
 watch(model, () => {
+  const modelValue = model.value;
+  const isNumberType = props.type === "number";
+  const isTextType = props.type === "text";
+
   if (
-    (props.type === "number" &&
-      ((model.value as number) < Number(props.min) ||
-        (model.value as number) > Number(props.max))) ||
-    (props.type === "text" && new RegExp(/[0-9]+/i).test(model.value as string))
+    (isNumberType &&
+      ((modelValue as number) < Number(props.min) ||
+        (modelValue as number) > Number(props.max))) ||
+    (isTextType && /[0-9]+/i.test(modelValue as string))
   ) {
     isError.value = true;
   } else {
