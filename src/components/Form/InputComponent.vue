@@ -53,8 +53,10 @@ const isError = ref<boolean>(false);
 
 watch(model, () => {
   if (
-    (props.type === "number" && (model.value as number) < Number(props.min)) ||
-    (model.value as number) > Number(props.max)
+    (props.type === "number" &&
+      ((model.value as number) < Number(props.min) ||
+        (model.value as number) > Number(props.max))) ||
+    (props.type === "text" && new RegExp(/[0-9]+/i).test(model.value as string))
   ) {
     isError.value = true;
   } else {
